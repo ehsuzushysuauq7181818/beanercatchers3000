@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beaner Clicker</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2E2A47; /* Dark background */
+            color: #F1E1C6; /* Light text */
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* Game Container */
+        .game-container {
+            max-width: 700px;
+            margin: auto;
+            padding: 30px;
+            background-color: #3D2C28; /* Dark brown */
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #F1E1C6; /* Light yellowish color */
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        /* Image Styling */
+        #erne-image {
+            width: 400px; /* Increased width */
+            height: 400px; /* Increased height */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            border: 3px solid #4C2C1B; /* Dark brown border */
+        }
+
+        #erne-image:hover {
+            transform: scale(1.1);
+        }
+
+        /* Score Display */
+        .score {
+            margin: 20px 0;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #F1E1C6; /* Light text for score */
+        }
+
+        /* Upgrade Section */
+        .upgrade-section {
+            margin-top: 30px;
+            background-color: #5E3D31; /* Lighter brown background for upgrade section */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .upgrade-section p {
+            font-size: 1.1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4C2C1B; /* Dark brown button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #6B4F30; /* Lighter brown when hovered */
+        }
+
+        /* Alert Style */
+        .alert {
+            font-size: 1.1em;
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Beaner Clicker</h1>
+        <p>Click the erne to earn points!</p>
+
+        <div class="image-container">
+            <!-- Updated path to image in the root directory -->
+            <img src="erne.jpg" alt="Erne" id="erne-image">
+        </div>
+
+        <div class="score">
+            <p>Erne Points: <span id="score">0</span></p>
+        </div>
+
+        <div class="upgrade-section">
+            <h3>Upgrade Your Clicks</h3>
+            <p>Current Upgrade Level: <span id="upgrade-level">1</span></p>
+            <p>Cost to Upgrade: <span id="upgrade-cost">10</span> points</p>
+            <button id="upgrade-button">Upgrade Click</button>
+        </div>
+
+        <!-- Optional: Display alert message if not enough points for upgrade -->
+        <div id="alert" class="alert" style="display: none;">
+            Not enough points to upgrade!
+        </div>
+    </div>
+
+    <script>
+        // Initial game state
+        let score = 0;
+        let upgradeLevel = 1;
+        let upgradeCost = 10;
+
+        // DOM Elements
+        const scoreDisplay = document.getElementById("score");
+        const upgradeLevelDisplay = document.getElementById("upgrade-level");
+        const upgradeCostDisplay = document.getElementById("upgrade-cost");
+        const upgradeButton = document.getElementById("upgrade-button");
+        const alertMessage = document.getElementById("alert");
+        const erneImage = document.getElementById("erne-image");
+
+        // Click Event: Increase score when the image is clicked
+        erneImage.addEventListener("click", () => {
+            score += upgradeLevel;
+            scoreDisplay.textContent = score;
+        });
+
+        // Upgrade Button Event: Upgrade the click power
+        upgradeButton.addEventListener("click", () => {
+            if (score >= upgradeCost) {
+                score -= upgradeCost;
+                upgradeLevel++;
+                upgradeCost = Math.floor(upgradeCost * 1.5); // Increase upgrade cost
+
+                // Update the UI
+                scoreDisplay.textContent = score;
+                upgradeLevelDisplay.textContent = upgradeLevel;
+                upgradeCostDisplay.textContent = upgradeCost;
+
+                // Hide alert if upgrade is successful
+                alertMessage.style.display = "none";
+            } else {
+                // Show alert message if not enough points
+                alertMessage.style.display = "block";
+            }
+        });
+    </script>
+
+</body>
+</html>
